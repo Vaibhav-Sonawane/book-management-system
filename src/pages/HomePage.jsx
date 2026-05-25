@@ -5,7 +5,7 @@ import ErrorMessage from "../components/ErrorMessege";
 import SearchBar from "../components/SearchBar";
 import FilterBar from "../components/FilterBar";
 import BookList from "../components/BookList";
-
+import styles from "../styles/HomePage.module.css";
 
 function HomePage() {
     const [books, setBooks]=useState([]);
@@ -41,7 +41,7 @@ function HomePage() {
     };
 
     const filteredBooks=books.filter((book)=>{
-        const matchesSearch=book.title.toLowerCase() ||
+        const matchesSearch=book.title.toLowerCase().includes(search.toLowerCase()) ||
         book.author.toLowerCase().includes(search.toLowerCase());
 
         const matchesGenre= genre=="" || book.genre.toLowerCase() == genre.toLowerCase();
@@ -55,11 +55,15 @@ function HomePage() {
 
   return (
     <>
-        <SearchBar search={search} setSearch={setSearch} />
-        <FilterBar genre={genre} setGenre={setGenre} books={books}/>
+    <div>
+        <div className={styles.searchfilter}>
+            <SearchBar search={search} setSearch={setSearch} />
+            <FilterBar genre={genre} setGenre={setGenre} books={books}/>
+        </div>
         <BookList books={filteredBooks} onDelete={handleDelete} />
+    </div>
     </>
   )
 }
 
-export default HomePage
+export default HomePage;
